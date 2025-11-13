@@ -156,10 +156,10 @@ const MyPostedJobs = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group"
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all group flex flex-col"
               >
                 {/* Cover Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-48 overflow-hidden flex-shrink-0">
                   <img
                     src={job.coverImage}
                     alt={job.title}
@@ -181,7 +181,7 @@ const MyPostedJobs = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="p-6 flex flex-col flex-1">
                   <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
                     {job.title}
                   </h3>
@@ -189,7 +189,7 @@ const MyPostedJobs = () => {
                     {job.summary}
                   </p>
 
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
+                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
                     <svg
                       className="w-4 h-4"
                       fill="none"
@@ -207,17 +207,17 @@ const MyPostedJobs = () => {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 mt-auto">
                     <Link
                       to={`/updateJob/${job._id}`}
-                      className="flex-1 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100 transition-all text-center"
+                      className="flex-1 px-4 py-2.5 bg-blue-50 text-blue-600 rounded-lg font-semibold hover:bg-blue-100 transition-all text-center"
                     >
                       Edit
                     </Link>
                     <button
                       onClick={() => handleDelete(job._id)}
                       disabled={deleteLoading === job._id}
-                      className="flex-1 px-4 py-2 bg-red-50 text-red-600 rounded-lg font-medium hover:bg-red-100 transition-all disabled:opacity-50"
+                      className="flex-1 px-4 py-2.5 bg-red-50 text-red-600 rounded-lg font-semibold hover:bg-red-100 transition-all disabled:opacity-50"
                     >
                       {deleteLoading === job._id ? "Deleting..." : "Delete"}
                     </button>
