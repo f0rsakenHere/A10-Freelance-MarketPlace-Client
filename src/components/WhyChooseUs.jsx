@@ -88,7 +88,7 @@ const WhyChooseUs = () => {
   };
 
   return (
-    <section className="py-20 bg-linear-to-br from-gray-50 to-blue-50">
+    <section className="py-20 bg-linear-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
@@ -98,10 +98,10 @@ const WhyChooseUs = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Why Choose Us?
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Join thousands of businesses and freelancers who trust our platform
             for secure, reliable, and high-quality work.
           </p>
@@ -125,7 +125,7 @@ const WhyChooseUs = () => {
               }}
               className="group"
             >
-              <div className="relative bg-linear-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200 hover:border-blue-300 shadow-sm hover:shadow-xl transition-all duration-300 h-full">
+              <div className="relative bg-linear-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 shadow-sm hover:shadow-xl transition-all duration-300 h-full">
                 {/* Icon Container */}
                 <div className="mb-6">
                   <div
@@ -136,12 +136,12 @@ const WhyChooseUs = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                   {feature.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-600 text-lg leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                   {feature.description}
                 </p>
 
@@ -162,20 +162,32 @@ const WhyChooseUs = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <div className="inline-flex items-center gap-8 px-8 py-4 bg-linear-to-r from-blue-50 to-purple-50 rounded-full border border-blue-200">
+          <div className="inline-flex items-center gap-8 px-8 py-4 bg-linear-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-full border border-blue-200 dark:border-blue-800">
             <div className="text-center">
-              <p className="text-3xl font-bold text-gray-900">10K+</p>
-              <p className="text-sm text-gray-600">Active Users</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                10K+
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Active Users
+              </p>
             </div>
-            <div className="w-px h-12 bg-gray-300"></div>
+            <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-gray-900">5K+</p>
-              <p className="text-sm text-gray-600">Projects Done</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                5K+
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Projects Done
+              </p>
             </div>
-            <div className="w-px h-12 bg-gray-300"></div>
+            <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-gray-900">98%</p>
-              <p className="text-sm text-gray-600">Success Rate</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                98%
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Success Rate
+              </p>
             </div>
           </div>
         </motion.div>

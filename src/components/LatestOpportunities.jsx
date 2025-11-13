@@ -160,7 +160,7 @@ const LatestOpportunities = () => {
   };
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header with Filter */}
         <div className="flex items-center justify-between mb-12">
@@ -170,10 +170,10 @@ const LatestOpportunities = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
               Latest Opportunities
             </h2>
-            <p className="text-gray-600 mt-2">
+            <p className="text-gray-600 dark:text-gray-300 mt-2">
               Discover the newest freelance jobs posted today
             </p>
           </motion.div>
@@ -188,7 +188,7 @@ const LatestOpportunities = () => {
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium cursor-pointer hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium cursor-pointer hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             >
               <option value="all">All Categories</option>
               <option value="web-dev">Web Development</option>
@@ -208,7 +208,7 @@ const LatestOpportunities = () => {
 
         {/* Error State */}
         {error && !loading && (
-          <div className="bg-red-50 border border-red-200 text-red-600 px-6 py-4 rounded-lg text-center">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-6 py-4 rounded-lg text-center">
             {error}
           </div>
         )}
@@ -232,7 +232,7 @@ const LatestOpportunities = () => {
                 }}
                 className="group"
               >
-                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                   {/* Category Badge */}
                   <Link
                     to={`/allJobs/${job._id || job.id}`}
@@ -266,30 +266,32 @@ const LatestOpportunities = () => {
                   <div className="p-6 flex flex-col flex-1">
                     {/* Job Title */}
                     <Link to={`/allJobs/${job._id || job.id}`}>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors min-h-[3.5rem] cursor-pointer">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors min-h-[3.5rem] cursor-pointer">
                         {job.title}
                       </h3>
                     </Link>
 
                     {/* Summary */}
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3 flex-1">
                       {job.summary}
                     </p>
 
                     {/* Posted By and Details */}
                     <div className="flex items-center justify-between mb-4 text-sm">
                       <div>
-                        <p className="text-gray-500">Posted by</p>
-                        <p className="font-semibold text-gray-700">
+                        <p className="text-gray-500 dark:text-gray-400">
+                          Posted by
+                        </p>
+                        <p className="font-semibold text-gray-700 dark:text-gray-300">
                           {job.postedBy}
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-gray-500">
+                        <p className="text-gray-500 dark:text-gray-400">
                           {job.deadline ||
                             (job.postedDate && getTimeAgo(job.postedDate))}
                         </p>
-                        <p className="font-bold text-blue-600 text-lg">
+                        <p className="font-bold text-blue-600 dark:text-blue-400 text-lg">
                           {job.price || "Negotiable"}
                         </p>
                       </div>
@@ -298,7 +300,7 @@ const LatestOpportunities = () => {
                     {/* Full Width Button */}
                     <Link
                       to={`/allJobs/${job._id || job.id}`}
-                      className="block w-full text-center px-4 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-300"
+                      className="block w-full text-center px-4 py-3 bg-blue-500 dark:bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors duration-300"
                     >
                       View Details
                     </Link>
@@ -319,7 +321,7 @@ const LatestOpportunities = () => {
         >
           <Link
             to="/allJobs"
-            className="inline-block px-8 py-3 border-2 border-blue-500 text-blue-500 font-semibold rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300"
+            className="inline-block px-8 py-3 border-2 border-blue-500 dark:border-blue-400 text-blue-500 dark:text-blue-400 font-semibold rounded-lg hover:bg-blue-500 dark:hover:bg-blue-600 hover:text-white transition-all duration-300"
           >
             View All Jobs
           </Link>

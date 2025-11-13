@@ -15,6 +15,7 @@ const JobDetails = () => {
   const [error, setError] = useState("");
   const [accepting, setAccepting] = useState(false);
   const [acceptSuccess, setAcceptSuccess] = useState(false);
+  const [isAlreadyAccepted, setIsAlreadyAccepted] = useState(false);
 
   useEffect(() => {
     fetchJobDetails();
@@ -27,7 +28,19 @@ const JobDetails = () => {
     try {
       const response = await jobAPI.getJobById(id);
       // API returns { success, data: {...job} }
-      setJob(response.data?.data || null);
+      const jobData = response.data?.data || null;
+      setJob(jobData);
+
+      // Check localStorage for accepted jobs
+      const acceptedJobs = JSON.parse(
+        localStorage.getItem("acceptedJobs") || "{}"
+      );
+
+      // Check if this job is already accepted
+      if (acceptedJobs[jobData?._id]) {
+        setIsAlreadyAccepted(true);
+        // Don't show success message on page load, only after accepting
+      }
     } catch (err) {
       setError("Failed to load job details. Please try again.");
       console.error("Error fetching job:", err);
@@ -45,6 +58,14 @@ const JobDetails = () => {
       return;
     }
 
+    if (isAlreadyAccepted) {
+      toast.warning("This job has already been accepted", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     setAccepting(true);
 
     try {
@@ -55,7 +76,20 @@ const JobDetails = () => {
         userName: user.displayName || user.email.split("@")[0],
       });
 
+      // Save to localStorage
+      const acceptedJobs = JSON.parse(
+        localStorage.getItem("acceptedJobs") || "{}"
+      );
+      acceptedJobs[job._id] = {
+        userEmail: user.email,
+        userName: user.displayName || user.email.split("@")[0],
+        acceptedAt: new Date().toISOString(),
+        jobTitle: job.title,
+      };
+      localStorage.setItem("acceptedJobs", JSON.stringify(acceptedJobs));
+
       setAcceptSuccess(true);
+      setIsAlreadyAccepted(true);
       toast.success("Job accepted successfully! Redirecting...", {
         position: "top-right",
         autoClose: 2000,
@@ -291,17 +325,38 @@ const JobDetails = () => {
 
           {/* Accept Button */}
           <div className="flex justify-end">
-            <button
-              onClick={handleAcceptJob}
-              disabled={accepting || acceptSuccess}
-              className="px-10 py-4 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-            >
-              {accepting
-                ? "Accepting..."
-                : acceptSuccess
-                ? "Accepted! ✓"
-                : "Accept Job"}
-            </button>
+            {isAlreadyAccepted && !acceptSuccess ? (
+              <div className="text-center">
+                <div className="px-10 py-4 bg-gray-400 text-white rounded-xl font-bold text-lg cursor-not-allowed opacity-70">
+                  Already Accepted
+                </div>
+                <p className="text-sm text-gray-600 mt-2">
+                  {(() => {
+                    const acceptedJobs = JSON.parse(
+                      localStorage.getItem("acceptedJobs") || "{}"
+                    );
+                    const acceptedBy = acceptedJobs[job._id];
+                    return acceptedBy?.userEmail === user?.email
+                      ? "You have already accepted this job"
+                      : `This job has been accepted by ${
+                          acceptedBy?.userName || "another user"
+                        }`;
+                  })()}
+                </p>
+              </div>
+            ) : (
+              <button
+                onClick={handleAcceptJob}
+                disabled={accepting || acceptSuccess || isAlreadyAccepted}
+                className="px-10 py-4 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+              >
+                {accepting
+                  ? "Accepting..."
+                  : acceptSuccess
+                  ? "Accepted! ✓"
+                  : "Accept Job"}
+              </button>
+            )}
           </div>
         </motion.div>
 

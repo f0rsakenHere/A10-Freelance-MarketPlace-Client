@@ -89,11 +89,11 @@ const AllJobs = () => {
   });
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 py-12 px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-6 relative overflow-hidden transition-colors">
       {/* Decorative Background Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-blue-300 dark:bg-blue-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-300 dark:bg-pink-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header with Glassmorphism */}
@@ -103,7 +103,7 @@ const AllJobs = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-md p-6 mb-8 border border-white/50"
+          className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl rounded-2xl shadow-md p-6 mb-8 border border-white/50 dark:border-gray-700/50"
         >
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search Input with Glassmorphism */}
@@ -114,7 +114,7 @@ const AllJobs = () => {
                   placeholder="Search jobs by title, description, or poster..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all shadow-sm"
+                  className="w-full pl-12 pr-4 py-3 bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 rounded-xl focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all shadow-sm text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400"
                 />
                 <svg
                   className="w-5 h-5 text-blue-500 absolute left-4 top-1/2 transform -translate-y-1/2"
@@ -137,7 +137,7 @@ const AllJobs = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm"
+                className="w-full px-4 py-3 bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 rounded-xl focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all shadow-sm text-gray-900 dark:text-white"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -152,7 +152,7 @@ const AllJobs = () => {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full px-4 py-3 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all shadow-sm"
+                className="w-full px-4 py-3 bg-white/70 dark:bg-gray-700/70 backdrop-blur-sm border border-gray-200/50 dark:border-gray-600/50 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all shadow-sm text-gray-900 dark:text-white"
               >
                 <option value="newest">Newest First</option>
                 <option value="oldest">Oldest First</option>
@@ -162,13 +162,15 @@ const AllJobs = () => {
 
           {/* Results Count */}
           {!loading && (
-            <div className="mt-4 text-sm text-gray-700 font-medium">
+            <div className="mt-4 text-sm text-gray-700 dark:text-gray-300 font-medium">
               Showing{" "}
-              <span className="text-blue-600 font-bold">
+              <span className="text-blue-600 dark:text-blue-400 font-bold">
                 {filteredJobs.length}
               </span>{" "}
               of{" "}
-              <span className="text-purple-600 font-bold">{jobs.length}</span>{" "}
+              <span className="text-purple-600 dark:text-purple-400 font-bold">
+                {jobs.length}
+              </span>{" "}
               jobs
             </div>
           )}
@@ -194,11 +196,11 @@ const AllJobs = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white rounded-2xl shadow-lg p-12 text-center"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-12 text-center"
           >
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
               <svg
-                className="w-12 h-12 text-gray-400"
+                className="w-12 h-12 text-gray-400 dark:text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -211,10 +213,10 @@ const AllJobs = () => {
                 />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
               No Jobs Found
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
               {searchTerm || selectedCategory !== "All"
                 ? "Try adjusting your search or filters"
                 : "No jobs available at the moment"}
@@ -225,7 +227,7 @@ const AllJobs = () => {
                   setSearchTerm("");
                   setSelectedCategory("All");
                 }}
-                className="px-6 py-3 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-all"
+                className="px-6 py-3 bg-blue-500 dark:bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-600 dark:hover:bg-blue-700 transition-all"
               >
                 Clear Filters
               </button>
@@ -243,7 +245,7 @@ const AllJobs = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.05 }}
                 whileHover={{ y: -5 }}
-                className="group bg-white/50 backdrop-blur-xl rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all border border-white/60"
+                className="group bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all border border-white/60 dark:border-gray-700/60"
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Cover Image */}
@@ -271,12 +273,12 @@ const AllJobs = () => {
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
                             <Link to={`/allJobs/${job._id}`}>
-                              <h3 className="text-2xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
+                              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
                                 {job.title}
                               </h3>
                             </Link>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 mb-3">
-                              <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 dark:text-gray-300 mb-3">
+                              <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
                                 <svg
                                   className="w-4 h-4 text-blue-500"
                                   fill="none"
@@ -294,7 +296,7 @@ const AllJobs = () => {
                                   {job.postedBy}
                                 </span>
                               </div>
-                              <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                              <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
                                 <svg
                                   className="w-4 h-4 text-purple-500"
                                   fill="none"
@@ -323,14 +325,14 @@ const AllJobs = () => {
                           </span>
                         </div>
 
-                        <p className="text-gray-700 leading-relaxed line-clamp-2 mb-4">
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-2 mb-4">
                           {job.summary}
                         </p>
                       </div>
 
                       {/* Bottom Section */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-200/50">
-                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-white/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-white/40 dark:bg-gray-700/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
                           <svg
                             className="w-4 h-4 text-pink-500"
                             fill="none"

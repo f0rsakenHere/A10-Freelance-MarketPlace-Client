@@ -115,7 +115,7 @@ const IntegrationsSection = () => {
   };
 
   return (
-    <section className="py-12 bg-linear-to-br from-gray-50 to-blue-50">
+    <section className="py-12 bg-linear-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
@@ -125,10 +125,10 @@ const IntegrationsSection = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
             Browse by Category
           </h2>
-          <p className="text-base text-gray-600 max-w-2xl mx-auto">
+          <p className="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Explore top freelance services across various categories and find
             the perfect match for your project needs.
           </p>
@@ -160,7 +160,7 @@ const IntegrationsSection = () => {
                 className="block group"
               >
                 {/* Glassmorphism Card */}
-                <div className="relative overflow-hidden rounded-xl bg-white/70 backdrop-blur-lg border border-white/50 shadow-lg hover:shadow-xl hover:border-blue-400 transition-all duration-300 p-6 h-full">
+                <div className="relative overflow-hidden rounded-xl bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg border border-white/50 dark:border-gray-700/50 shadow-lg hover:shadow-xl hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 p-6 h-full">
                   {/* Gradient Background */}
                   <div
                     className={`absolute inset-0 bg-linear-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
@@ -171,19 +171,19 @@ const IntegrationsSection = () => {
                     {/* Icon */}
                     <div className="mb-3 transition-all duration-300">
                       <div
-                        className={`text-gray-700 group-hover:scale-110 transition-transform duration-300`}
+                        className={`text-gray-700 dark:text-gray-300 group-hover:scale-110 transition-transform duration-300`}
                       >
                         {category.icon}
                       </div>
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                       {category.name}
                     </h3>
 
                     {/* Subtitle */}
-                    <p className="text-xs text-gray-600 font-medium">
+                    <p className="text-xs text-gray-600 dark:text-gray-400 font-medium">
                       {category.subtitle}
                     </p>
                   </div>

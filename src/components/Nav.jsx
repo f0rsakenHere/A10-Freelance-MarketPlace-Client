@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
+import { useTheme } from "../context/ThemeProvider";
 
 const Nav = () => {
   const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user, logoutUser } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = async () => {
     try {
@@ -16,7 +18,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200">
+    <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 transition-colors">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo/Brand */}
@@ -36,7 +38,7 @@ const Nav = () => {
                 />
               </svg>
             </div>
-            <span className="text-xl font-bold text-gray-900">
+            <span className="text-xl font-bold text-gray-900 dark:text-white">
               FreelanceHub
             </span>
           </Link>
@@ -45,14 +47,14 @@ const Nav = () => {
           <div className="hidden md:flex items-center gap-8">
             <Link
               to="/"
-              className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
             >
               Home
             </Link>
 
             <Link
               to="/allJobs"
-              className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+              className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
             >
               All Jobs
             </Link>
@@ -60,7 +62,7 @@ const Nav = () => {
             {/* My Jobs Dropdown */}
             <div className="relative group">
               <button
-                className="flex items-center gap-1 text-gray-700 hover:text-gray-900 font-medium transition-colors"
+                className="flex items-center gap-1 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                 onMouseEnter={() => setIsFeaturesOpen(true)}
               >
                 My Jobs
@@ -84,26 +86,26 @@ const Nav = () => {
               {/* Dropdown Menu */}
               {isFeaturesOpen && (
                 <div
-                  className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                  className="absolute top-full left-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50"
                   onMouseLeave={() => setIsFeaturesOpen(false)}
                 >
                   <Link
                     to="/addJob"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     onClick={() => setIsFeaturesOpen(false)}
                   >
                     Add Job
                   </Link>
                   <Link
                     to="/myAddedJobs"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     onClick={() => setIsFeaturesOpen(false)}
                   >
                     My Posted Jobs
                   </Link>
                   <Link
                     to="/my-accepted-tasks"
-                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     onClick={() => setIsFeaturesOpen(false)}
                   >
                     My Accepted Tasks
@@ -115,16 +117,45 @@ const Nav = () => {
 
           {/* Action Buttons / User Menu */}
           <div className="hidden md:flex items-center gap-4">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <svg
+                  className="w-5 h-5 text-yellow-500"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="w-5 h-5 text-gray-700"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                </svg>
+              )}
+            </button>
+
             {user ? (
               <div className="relative">
                 <button
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
                   <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold">
                     {user.displayName?.charAt(0) || user.email?.charAt(0)}
                   </div>
-                  <span className="font-medium text-gray-700">
+                  <span className="font-medium text-gray-700 dark:text-gray-300">
                     {user.displayName || "User"}
                   </span>
                   <svg
@@ -147,20 +178,20 @@ const Nav = () => {
                 {/* User Dropdown Menu */}
                 {isUserMenuOpen && (
                   <div
-                    className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                    className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50"
                     onMouseLeave={() => setIsUserMenuOpen(false)}
                   >
-                    <div className="px-4 py-2 border-b border-gray-200">
-                      <p className="text-sm font-semibold text-gray-900">
+                    <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-white">
                         {user.displayName}
                       </p>
-                      <p className="text-xs text-gray-500 truncate">
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                         {user.email}
                       </p>
                     </div>
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-full text-left px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                     >
                       Logout
                     </button>
@@ -171,7 +202,7 @@ const Nav = () => {
               <>
                 <Link
                   to="/login"
-                  className="px-5 py-2 text-gray-700 font-medium hover:text-gray-900 transition-colors"
+                  className="px-5 py-2 text-gray-700 dark:text-gray-300 font-medium hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                   Login
                 </Link>
@@ -186,7 +217,7 @@ const Nav = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="md:hidden p-2 text-gray-700 hover:text-gray-900">
+          <button className="md:hidden p-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
             <svg
               className="w-6 h-6"
               fill="none"

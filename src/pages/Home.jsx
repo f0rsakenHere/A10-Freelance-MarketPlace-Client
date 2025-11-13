@@ -44,7 +44,7 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         <motion.div
           className="text-center"
@@ -54,7 +54,7 @@ const Home = () => {
         >
           {/* Headline */}
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 leading-tight"
             variants={itemVariants}
           >
             Find the Perfect Freelance Services for Your Business
@@ -62,7 +62,7 @@ const Home = () => {
 
           {/* Sub-headline */}
           <motion.p
-            className="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto"
+            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto"
             variants={itemVariants}
           >
             Connect with top talent in web development, design, and marketing.
@@ -82,7 +82,7 @@ const Home = () => {
             >
               <Link
                 to="/allJobs"
-                className="inline-block px-8 py-4 bg-blue-500 text-white text-lg font-semibold rounded-lg shadow-lg"
+                className="inline-block px-8 py-4 bg-blue-500 dark:bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors"
               >
                 Find Work
               </Link>
@@ -96,7 +96,7 @@ const Home = () => {
             >
               <Link
                 to="/addJob"
-                className="inline-block px-8 py-4 bg-transparent text-blue-500 text-lg font-semibold rounded-lg border-2 border-blue-500"
+                className="inline-block px-8 py-4 bg-transparent text-blue-500 dark:text-blue-400 text-lg font-semibold rounded-lg border-2 border-blue-500 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
               >
                 Post a Job
               </Link>
