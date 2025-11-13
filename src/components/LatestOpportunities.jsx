@@ -1,12 +1,58 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const LatestOpportunities = () => {
   const [filter, setFilter] = useState("all");
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Sample job data - replace with actual data from your API
-  const jobs = [
+  // Fetch latest jobs from MongoDB
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          "http://localhost:5000/api/jobs/latest?limit=6"
+        );
+        if (response.data.success) {
+          setJobs(response.data.data);
+        }
+      } catch (err) {
+        setError("Failed to load jobs. Please try again later.");
+        console.error("Error fetching jobs:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
+  // Helper function to get category color
+  const getCategoryColor = (category) => {
+    const colors = {
+      "Web Development": "bg-blue-500",
+      "Graphics Design": "bg-purple-500",
+      "Digital Marketing": "bg-green-500",
+      "Video Editing": "bg-red-500",
+    };
+    return colors[category] || "bg-gray-500";
+  };
+
+  // Helper function to format date
+  const getTimeAgo = (date) => {
+    const posted = new Date(date);
+    const now = new Date();
+    const diffTime = Math.abs(now - posted);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
+  };
+
+  // Sample fallback jobs for when no data exists
+  const sampleJobs = [
     {
       id: 1,
       category: "Web Dev",
@@ -87,6 +133,9 @@ const LatestOpportunities = () => {
     },
   ];
 
+  // Use sample jobs if no jobs from database
+  const displayJobs = jobs.length > 0 ? jobs : sampleJobs;
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -150,83 +199,112 @@ const LatestOpportunities = () => {
           </motion.div>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500"></div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="bg-red-50 border border-red-200 text-red-600 px-6 py-4 rounded-lg text-center">
+            {error}
+          </div>
+        )}
+
         {/* Job Cards Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
-          {jobs.map((job) => (
-            <motion.div
-              key={job.id}
-              variants={cardVariants}
-              whileHover={{
-                y: -8,
-                transition: { duration: 0.3 },
-              }}
-              className="group"
-            >
-              <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
-                {/* Category Badge */}
-                <div className="relative">
-                  <img
-                    src={job.image}
-                    alt={job.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span
-                      className={`${job.categoryColor} text-white text-xs font-semibold px-3 py-1 rounded-full`}
+        {!loading && !error && (
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            {displayJobs.map((job) => (
+              <motion.div
+                key={job._id || job.id}
+                variants={cardVariants}
+                whileHover={{
+                  y: -8,
+                  transition: { duration: 0.3 },
+                }}
+                className="group"
+              >
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                  {/* Category Badge */}
+                  <div className="relative">
+                    <img
+                      src={
+                        job.coverImage ||
+                        job.image ||
+                        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=300&fit=crop"
+                      }
+                      alt={job.title}
+                      className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        e.target.src =
+                          "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500&h=300&fit=crop";
+                      }}
+                    />
+                    <div className="absolute top-4 left-4">
+                      <span
+                        className={`${
+                          job.categoryColor || getCategoryColor(job.category)
+                        } text-white text-xs font-semibold px-3 py-1 rounded-full`}
+                      >
+                        {job.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6">
+                    {/* Job Title */}
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                      {job.title}
+                    </h3>
+
+                    {/* Summary */}
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {job.summary && job.summary.length > 100
+                        ? `${job.summary.substring(0, 100)}...`
+                        : job.summary}
+                    </p>
+
+                    {/* Posted By and Details */}
+                    <div className="flex items-center justify-between mb-4 text-sm">
+                      <div>
+                        <p className="text-gray-500">Posted by</p>
+                        <p className="font-semibold text-gray-700">
+                          {job.postedBy}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-gray-500">
+                          {job.deadline ||
+                            (job.postedDate && getTimeAgo(job.postedDate))}
+                        </p>
+                        <p className="font-bold text-blue-600 text-lg">
+                          {job.price || "Negotiable"}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Full Width Button */}
+                    <Link
+                      to={`/allJobs/${job._id || job.id}`}
+                      className="block w-full text-center px-4 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-300"
                     >
-                      {job.category}
-                    </span>
+                      View Details
+                    </Link>
                   </div>
                 </div>
-
-                {/* Card Content */}
-                <div className="p-6">
-                  {/* Job Title */}
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                    {job.title}
-                  </h3>
-
-                  {/* Summary */}
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {job.summary.length > 100
-                      ? `${job.summary.substring(0, 100)}...`
-                      : job.summary}
-                  </p>
-
-                  {/* Posted By and Details */}
-                  <div className="flex items-center justify-between mb-4 text-sm">
-                    <div>
-                      <p className="text-gray-500">Posted by</p>
-                      <p className="font-semibold text-gray-700">
-                        {job.postedBy}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-gray-500">{job.deadline}</p>
-                      <p className="font-bold text-blue-600 text-lg">
-                        {job.price}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Full Width Button */}
-                  <Link
-                    to={`/allJobs/${job.id}`}
-                    className="block w-full text-center px-4 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-colors duration-300"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
 
         {/* View All Button */}
         <motion.div

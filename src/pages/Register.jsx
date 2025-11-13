@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,15 +18,26 @@ const Register = () => {
     e.preventDefault();
     setError("");
 
+    // Password validation
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      setError("Password must include at least one uppercase letter");
+      return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      setError("Password must include at least one lowercase letter");
       return;
     }
 
     setLoading(true);
 
     try {
-      await registerUser(email, password, name);
+      await registerUser(email, password, name, photoURL);
       navigate("/");
     } catch (error) {
       setError(error.message);
@@ -115,6 +127,25 @@ const Register = () => {
               />
             </div>
 
+            {/* Photo URL Input */}
+            <div>
+              <label
+                htmlFor="photoURL"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Photo URL
+              </label>
+              <input
+                id="photoURL"
+                name="photoURL"
+                type="url"
+                value={photoURL}
+                onChange={(e) => setPhotoURL(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="https://example.com/photo.jpg"
+              />
+            </div>
+
             {/* Password Input */}
             <div>
               <label
@@ -133,9 +164,11 @@ const Register = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="••••••••"
               />
-              <p className="mt-1 text-xs text-gray-500">
-                Must be at least 6 characters
-              </p>
+              <ul className="mt-2 text-xs text-gray-500 space-y-1">
+                <li>• At least 6 characters long</li>
+                <li>• At least one uppercase letter</li>
+                <li>• At least one lowercase letter</li>
+              </ul>
             </div>
 
             {/* Submit Button */}

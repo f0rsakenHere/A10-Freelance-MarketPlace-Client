@@ -92,12 +92,26 @@ const Login = () => {
 
             {/* Password Input */}
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Password
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Password
+                </label>
+                <a
+                  href="#"
+                  className="text-sm text-blue-500 hover:text-blue-600 font-medium"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert(
+                      "Password reset functionality will be implemented soon!"
+                    );
+                  }}
+                >
+                  Forgot Password?
+                </a>
+              </div>
               <input
                 id="password"
                 name="password"

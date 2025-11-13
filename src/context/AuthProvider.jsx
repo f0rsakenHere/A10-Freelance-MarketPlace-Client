@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Register user with email and password
-  const registerUser = async (email, password, name) => {
+  const registerUser = async (email, password, name, photoURL = "") => {
     setLoading(true);
     try {
       const result = await createUserWithEmailAndPassword(
@@ -33,11 +33,13 @@ export const AuthProvider = ({ children }) => {
         email,
         password
       );
-      // Update profile with name
-      await updateProfile(result.user, {
-        displayName: name,
-      });
-      setUser({ ...result.user, displayName: name });
+      // Update profile with name and photo
+      const profileData = { displayName: name };
+      if (photoURL) {
+        profileData.photoURL = photoURL;
+      }
+      await updateProfile(result.user, profileData);
+      setUser({ ...result.user, displayName: name, photoURL });
       return result;
     } catch (error) {
       throw error;

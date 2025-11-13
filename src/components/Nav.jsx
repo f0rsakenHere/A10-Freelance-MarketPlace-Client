@@ -58,12 +58,11 @@ const Nav = () => {
             </Link>
 
             {/* My Jobs Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setIsFeaturesOpen(true)}
-              onMouseLeave={() => setIsFeaturesOpen(false)}
-            >
-              <button className="flex items-center gap-1 text-gray-700 hover:text-gray-900 font-medium transition-colors">
+            <div className="relative group">
+              <button
+                className="flex items-center gap-1 text-gray-700 hover:text-gray-900 font-medium transition-colors"
+                onMouseEnter={() => setIsFeaturesOpen(true)}
+              >
                 My Jobs
                 <svg
                   className={`w-4 h-4 transition-transform ${
@@ -84,22 +83,28 @@ const Nav = () => {
 
               {/* Dropdown Menu */}
               {isFeaturesOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                <div
+                  className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                  onMouseLeave={() => setIsFeaturesOpen(false)}
+                >
                   <Link
                     to="/addJob"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={() => setIsFeaturesOpen(false)}
                   >
                     Add Job
                   </Link>
                   <Link
                     to="/myAddedJobs"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={() => setIsFeaturesOpen(false)}
                   >
                     My Posted Jobs
                   </Link>
                   <Link
                     to="/my-accepted-tasks"
                     className="block px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors"
+                    onClick={() => setIsFeaturesOpen(false)}
                   >
                     My Accepted Tasks
                   </Link>
@@ -111,12 +116,11 @@ const Nav = () => {
           {/* Action Buttons / User Menu */}
           <div className="hidden md:flex items-center gap-4">
             {user ? (
-              <div
-                className="relative"
-                onMouseEnter={() => setIsUserMenuOpen(true)}
-                onMouseLeave={() => setIsUserMenuOpen(false)}
-              >
-                <button className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+              <div className="relative">
+                <button
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  onMouseEnter={() => setIsUserMenuOpen(true)}
+                >
                   <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold">
                     {user.displayName?.charAt(0) || user.email?.charAt(0)}
                   </div>
@@ -142,7 +146,10 @@ const Nav = () => {
 
                 {/* User Dropdown Menu */}
                 {isUserMenuOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <div
+                    className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                    onMouseLeave={() => setIsUserMenuOpen(false)}
+                  >
                     <div className="px-4 py-2 border-b border-gray-200">
                       <p className="text-sm font-semibold text-gray-900">
                         {user.displayName}
