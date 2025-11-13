@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 const LatestOpportunities = () => {
-  const [filter, setFilter] = useState("all");
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -162,42 +161,21 @@ const LatestOpportunities = () => {
   return (
     <section className="py-20 bg-white dark:bg-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Section Header with Filter */}
-        <div className="flex items-center justify-between mb-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
-              Latest Opportunities
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">
-              Discover the newest freelance jobs posted today
-            </p>
-          </motion.div>
-
-          {/* Filter Dropdown */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <select
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium cursor-pointer hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-            >
-              <option value="all">All Categories</option>
-              <option value="web-dev">Web Development</option>
-              <option value="graphics">Graphics Design</option>
-              <option value="marketing">Digital Marketing</option>
-              <option value="video">Video Editing</option>
-            </select>
-          </motion.div>
-        </div>
+        {/* Section Header */}
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            Latest Opportunities
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
+            Discover the newest freelance jobs posted today
+          </p>
+        </motion.div>
 
         {/* Loading State */}
         {loading && (

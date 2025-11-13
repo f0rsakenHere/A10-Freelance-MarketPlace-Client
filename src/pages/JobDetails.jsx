@@ -18,7 +18,10 @@ const JobDetails = () => {
   const [isAlreadyAccepted, setIsAlreadyAccepted] = useState(false);
 
   useEffect(() => {
+    // Scroll to top when component mounts or job ID changes
+    window.scrollTo(0, 0);
     fetchJobDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchJobDetails = async () => {

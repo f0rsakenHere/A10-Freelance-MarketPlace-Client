@@ -175,7 +175,7 @@ const MyAcceptedJobs = () => {
                 <div className="flex flex-col md:flex-row">
                   {/* Cover Image */}
                   <Link
-                    to={`/allJobs/${task.jobId}`}
+                    to={`/job/${task.jobId}`}
                     className="md:w-72 h-56 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
                   >
                     <img
@@ -197,7 +197,7 @@ const MyAcceptedJobs = () => {
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
-                            <Link to={`/allJobs/${task.jobId}`}>
+                            <Link to={`/job/${task.jobId}`}>
                               <h3 className="text-2xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
                                 {task.title}
                               </h3>
@@ -277,7 +277,7 @@ const MyAcceptedJobs = () => {
                         </div>
 
                         <Link
-                          to={`/allJobs/${task.jobId}`}
+                          to={`/job/${task.jobId}`}
                           className="px-6 py-2 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300"
                         >
                           View Details →

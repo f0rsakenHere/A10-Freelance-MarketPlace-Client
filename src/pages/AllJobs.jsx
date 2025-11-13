@@ -250,7 +250,7 @@ const AllJobs = () => {
                 <div className="flex flex-col md:flex-row">
                   {/* Cover Image */}
                   <Link
-                    to={`/allJobs/${job._id}`}
+                    to={`/job/${job._id}`}
                     className="md:w-72 h-56 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
                   >
                     <img
@@ -272,7 +272,7 @@ const AllJobs = () => {
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
-                            <Link to={`/allJobs/${job._id}`}>
+                            <Link to={`/job/${job._id}`}>
                               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
                                 {job.title}
                               </h3>
@@ -352,7 +352,7 @@ const AllJobs = () => {
                         </div>
 
                         <Link
-                          to={`/allJobs/${job._id}`}
+                          to={`/job/${job._id}`}
                           className="px-8 py-3 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300"
                         >
                           View Details →

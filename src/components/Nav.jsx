@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import { useTheme } from "../context/ThemeProvider";
@@ -8,6 +8,18 @@ const Nav = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user, logoutUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isUserMenuOpen && !event.target.closest(".user-menu-container")) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isUserMenuOpen]);
 
   const handleLogout = async () => {
     try {
@@ -147,14 +159,24 @@ const Nav = () => {
             </button>
 
             {user ? (
-              <div className="relative">
+              <div className="relative user-menu-container">
                 <button
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   onMouseEnter={() => setIsUserMenuOpen(true)}
                 >
-                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold">
-                    {user.displayName?.charAt(0) || user.email?.charAt(0)}
-                  </div>
+                  {user.photoURL ? (
+                    <img
+                      src={user.photoURL}
+                      alt={user.displayName || "User"}
+                      className="w-8 h-8 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold">
+                      {user.displayName?.charAt(0) || user.email?.charAt(0)}
+                    </div>
+                  )}
                   <span className="font-medium text-gray-700 dark:text-gray-300">
                     {user.displayName || "User"}
                   </span>
