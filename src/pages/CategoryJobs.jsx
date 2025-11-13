@@ -16,6 +16,8 @@ const CategoryJobs = () => {
     .join(" ");
 
   useEffect(() => {
+    // Scroll to top when component mounts or category changes
+    window.scrollTo(0, 0);
     fetchCategoryJobs();
   }, [category]);
 

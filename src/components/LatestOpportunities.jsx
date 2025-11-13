@@ -235,7 +235,7 @@ const LatestOpportunities = () => {
                 <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                   {/* Category Badge */}
                   <Link
-                    to={`/allJobs/${job._id || job.id}`}
+                    to={`/job/${job._id || job.id}`}
                     className="relative block cursor-pointer"
                   >
                     <img
@@ -265,7 +265,7 @@ const LatestOpportunities = () => {
                   {/* Card Content */}
                   <div className="p-6 flex flex-col flex-1">
                     {/* Job Title */}
-                    <Link to={`/allJobs/${job._id || job.id}`}>
+                    <Link to={`/job/${job._id || job.id}`}>
                       <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors min-h-[3.5rem] cursor-pointer">
                         {job.title}
                       </h3>
@@ -299,7 +299,7 @@ const LatestOpportunities = () => {
 
                     {/* Full Width Button */}
                     <Link
-                      to={`/allJobs/${job._id || job.id}`}
+                      to={`/job/${job._id || job.id}`}
                       className="block w-full text-center px-4 py-3 bg-blue-500 dark:bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors duration-300"
                     >
                       View Details
