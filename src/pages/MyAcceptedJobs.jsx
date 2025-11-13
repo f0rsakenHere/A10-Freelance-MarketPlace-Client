@@ -11,6 +11,7 @@ const MyAcceptedJobs = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [removingTaskId, setRemovingTaskId] = useState(null);
 
   useEffect(() => {
     fetchAcceptedTasks();
@@ -32,12 +33,18 @@ const MyAcceptedJobs = () => {
             const jobResponse = await jobAPI.getJobById(task.jobId);
             const jobData = jobResponse.data?.data || {};
             return {
-              ...task,
+              acceptedTaskId: task._id,
+              acceptedByEmail: task.acceptedByEmail,
+              userEmail: task.userEmail,
               ...jobData,
+              jobId: task.jobId,
               acceptedDate: task.acceptedDate || task.createdAt,
             };
           } catch {
-            return task;
+            return {
+              ...task,
+              acceptedTaskId: task._id,
+            };
           }
         })
       );
@@ -77,6 +84,72 @@ const MyAcceptedJobs = () => {
     if (diffDays < 7) return `${diffDays} days ago`;
     if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
     return `${Math.floor(diffDays / 30)} months ago`;
+  };
+
+  const handleRemoveTask = async (acceptedTaskId, action) => {
+    if (!user?.email) return;
+
+    const actionText = action === "done" ? "mark as done" : "cancel";
+    const confirmMessage = `Are you sure you want to ${actionText} this task?`;
+
+    if (!window.confirm(confirmMessage)) {
+      return;
+    }
+
+    setRemovingTaskId(acceptedTaskId);
+
+    try {
+      const task = tasks.find((t) => t.acceptedTaskId === acceptedTaskId);
+      if (!task) {
+        throw new Error("Task not found");
+      }
+
+      console.log("Removing task with ID:", acceptedTaskId);
+      console.log("Task object:", task);
+
+      if (!acceptedTaskId) {
+        throw new Error("Accepted task ID is missing");
+      }
+
+      await jobAPI.removeAcceptedJob(acceptedTaskId, user.email);
+
+      const acceptedJobs = JSON.parse(
+        localStorage.getItem("acceptedJobs") || "{}"
+      );
+
+      if (task.jobId && acceptedJobs[task.jobId]) {
+        delete acceptedJobs[task.jobId];
+        localStorage.setItem("acceptedJobs", JSON.stringify(acceptedJobs));
+      }
+
+      setTasks(tasks.filter((t) => t.acceptedTaskId !== acceptedTaskId));
+
+      const message =
+        action === "done"
+          ? "Task marked as completed!"
+          : "Task cancelled successfully!";
+
+      toast.success(message, {
+        position: "top-right",
+        autoClose: 2000,
+      });
+    } catch (err) {
+      const errorMessage =
+        err.response?.data?.message ||
+        err.message ||
+        `Failed to ${actionText} task. Please try again.`;
+      toast.error(errorMessage, {
+        position: "top-right",
+        autoClose: 4000,
+      });
+      console.log("Error details:", {
+        acceptedTaskId,
+        userEmail: user.email,
+        error: err.response?.data || err.message,
+      });
+    } finally {
+      setRemovingTaskId(null);
+    }
   };
 
   return (
@@ -160,7 +233,7 @@ const MyAcceptedJobs = () => {
           <div className="space-y-6">
             {tasks.map((task, index) => (
               <motion.div
-                key={task._id}
+                key={task.acceptedTaskId || task._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.05 }}
@@ -251,23 +324,29 @@ const MyAcceptedJobs = () => {
 
                       {/* Bottom Section */}
                       <div className="flex items-center justify-between pt-4 border-t border-gray-200/50">
-                        <div className="flex items-center gap-2 text-sm text-gray-600 bg-white/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                          <svg
-                            className="w-4 h-4 text-pink-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() =>
+                              handleRemoveTask(task.acceptedTaskId, "done")
+                            }
+                            disabled={removingTaskId === task.acceptedTaskId}
+                            className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            title="Mark as Done"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                            />
-                          </svg>
-                          <span className="text-xs font-medium">
-                            {task.userEmail}
-                          </span>
+                            <span className="text-lg">✅</span>
+                            <span>Done</span>
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleRemoveTask(task.acceptedTaskId, "cancel")
+                            }
+                            disabled={removingTaskId === task.acceptedTaskId}
+                            className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            title="Cancel Task"
+                          >
+                            <span className="text-lg">❌</span>
+                            <span>Cancel</span>
+                          </button>
                         </div>
 
                         <Link
