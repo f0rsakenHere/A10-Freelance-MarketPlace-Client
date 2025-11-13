@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import IntegrationsSection from "../components/IntegrationsSection";
+import LatestOpportunities from "../components/LatestOpportunities";
+import WhyChooseUs from "../components/WhyChooseUs";
 
 const Home = () => {
   // Smooth animation variants
@@ -23,7 +25,7 @@ const Home = () => {
       y: 0,
       transition: {
         duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94], // Custom easing for smoothness
+        ease: [0.25, 0.46, 0.45, 0.94],
       },
     },
   };
@@ -103,8 +105,14 @@ const Home = () => {
         </motion.div>
       </div>
 
-      {/* Integrations Section */}
+      {/* Browse by Category Section */}
       <IntegrationsSection />
+
+      {/* Latest Opportunities Section */}
+      <LatestOpportunities />
+
+      {/* Why Choose Us Section */}
+      <WhyChooseUs />
     </div>
   );
 };
