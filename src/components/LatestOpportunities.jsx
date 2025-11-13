@@ -232,9 +232,12 @@ const LatestOpportunities = () => {
                 }}
                 className="group"
               >
-                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                   {/* Category Badge */}
-                  <div className="relative">
+                  <Link
+                    to={`/allJobs/${job._id || job.id}`}
+                    className="relative block cursor-pointer"
+                  >
                     <img
                       src={
                         job.coverImage ||
@@ -257,20 +260,20 @@ const LatestOpportunities = () => {
                         {job.category}
                       </span>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Card Content */}
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-1">
                     {/* Job Title */}
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
-                      {job.title}
-                    </h3>
+                    <Link to={`/allJobs/${job._id || job.id}`}>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors min-h-[3.5rem] cursor-pointer">
+                        {job.title}
+                      </h3>
+                    </Link>
 
                     {/* Summary */}
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {job.summary && job.summary.length > 100
-                        ? `${job.summary.substring(0, 100)}...`
-                        : job.summary}
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+                      {job.summary}
                     </p>
 
                     {/* Posted By and Details */}

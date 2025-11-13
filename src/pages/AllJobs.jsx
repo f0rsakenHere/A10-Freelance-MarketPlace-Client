@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { jobAPI } from "../api/jobAPI";
 import { motion } from "motion/react";
@@ -9,6 +9,7 @@ const AllJobs = () => {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("newest");
 
   const categories = [
     "All",
@@ -22,16 +23,14 @@ const AllJobs = () => {
     "UI/UX Design",
   ];
 
-  useEffect(() => {
-    fetchAllJobs();
-  }, []);
-
-  const fetchAllJobs = async () => {
+  const fetchAllJobs = useCallback(async () => {
     setLoading(true);
     setError("");
 
     try {
-      const response = await jobAPI.getAllJobs();
+      // Map sortBy state to API parameters
+      const sortOrder = sortBy === "newest" ? "desc" : "asc";
+      const response = await jobAPI.getAllJobs("postedDate", sortOrder);
       // API returns { success, count, data: [...jobs] }
       const jobsData = response.data?.data || [];
       setJobs(jobsData);
@@ -42,7 +41,11 @@ const AllJobs = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [sortBy]);
+
+  useEffect(() => {
+    fetchAllJobs();
+  }, [fetchAllJobs]);
 
   const getCategoryColor = (category) => {
     const colors = {
@@ -92,7 +95,7 @@ const AllJobs = () => {
       <div className="absolute top-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header with Glassmorphism */}
 
         {/* Search and Filter Bar with Glassmorphism */}
@@ -141,6 +144,18 @@ const AllJobs = () => {
                     {cat === "All" ? "All Categories" : cat}
                   </option>
                 ))}
+              </select>
+            </div>
+
+            {/* Sort by Date with Glassmorphism */}
+            <div className="md:w-56">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full px-4 py-3 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-xl focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all shadow-sm"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
               </select>
             </div>
           </div>
@@ -232,7 +247,10 @@ const AllJobs = () => {
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Cover Image */}
-                  <div className="md:w-72 h-56 md:h-auto overflow-hidden shrink-0 relative">
+                  <Link
+                    to={`/allJobs/${job._id}`}
+                    className="md:w-72 h-56 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
+                  >
                     <img
                       src={job.coverImage}
                       alt={job.title}
@@ -243,7 +261,7 @@ const AllJobs = () => {
                       }}
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
+                  </Link>
 
                   {/* Content */}
                   <div className="flex-1 p-6">
@@ -252,9 +270,11 @@ const AllJobs = () => {
                       <div className="flex-1">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
-                            <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                              {job.title}
-                            </h3>
+                            <Link to={`/allJobs/${job._id}`}>
+                              <h3 className="text-2xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
+                                {job.title}
+                              </h3>
+                            </Link>
                             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 mb-3">
                               <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
                                 <svg
