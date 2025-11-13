@@ -31,7 +31,6 @@ const UpdateJob = () => {
     "UI/UX Design",
   ];
 
-  // Fetch existing job data
   useEffect(() => {
     const fetchJob = async () => {
       try {
@@ -39,14 +38,12 @@ const UpdateJob = () => {
         const response = await jobAPI.getJobById(id);
         const job = response.data.data;
 
-        // Check if user owns this job
         if (job.userEmail !== user?.email) {
           setError("You don't have permission to edit this job.");
           setTimeout(() => navigate("/myAddedJobs"), 2000);
           return;
         }
 
-        // Populate form with existing data
         setFormData({
           title: job.title || "",
           category: job.category || "Web Development",
@@ -55,7 +52,6 @@ const UpdateJob = () => {
         });
       } catch (err) {
         setError("Failed to load job data. Please try again.");
-        console.error("Error fetching job:", err);
       } finally {
         setFetchLoading(false);
       }
@@ -80,7 +76,6 @@ const UpdateJob = () => {
     setLoading(true);
 
     try {
-      // Prepare job data
       const jobData = {
         title: formData.title,
         category: formData.category,
@@ -89,12 +84,9 @@ const UpdateJob = () => {
         userEmail: user.email,
       };
 
-      // Update job in database
       await jobAPI.updateJob(id, jobData);
-
       setSuccess(true);
 
-      // Show success message and redirect after 2 seconds
       setTimeout(() => {
         navigate("/myAddedJobs");
       }, 2000);
@@ -102,7 +94,6 @@ const UpdateJob = () => {
       setError(
         err.response?.data?.message || "Failed to update job. Please try again."
       );
-      console.error("Error updating job:", err);
     } finally {
       setLoading(false);
     }

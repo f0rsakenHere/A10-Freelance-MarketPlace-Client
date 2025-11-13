@@ -21,7 +21,6 @@ const LatestOpportunities = () => {
         }
       } catch (err) {
         setError("Failed to load jobs. Please try again later.");
-        console.error("Error fetching jobs:", err);
       } finally {
         setLoading(false);
       }
@@ -30,7 +29,6 @@ const LatestOpportunities = () => {
     fetchJobs();
   }, []);
 
-  // Helper function to get category color
   const getCategoryColor = (category) => {
     const colors = {
       "Web Development": "bg-blue-500",
@@ -41,7 +39,6 @@ const LatestOpportunities = () => {
     return colors[category] || "bg-gray-500";
   };
 
-  // Helper function to format date
   const getTimeAgo = (date) => {
     const posted = new Date(date);
     const now = new Date();
@@ -50,7 +47,6 @@ const LatestOpportunities = () => {
     return `${diffDays} day${diffDays !== 1 ? "s" : ""} ago`;
   };
 
-  // Sample fallback jobs for when no data exists
   const sampleJobs = [
     {
       id: 1,
@@ -132,7 +128,6 @@ const LatestOpportunities = () => {
     },
   ];
 
-  // Use sample jobs if no jobs from database
   const displayJobs = jobs.length > 0 ? jobs : sampleJobs;
 
   const containerVariants = {

@@ -43,7 +43,6 @@ const AddJob = () => {
     setLoading(true);
 
     try {
-      // Prepare job data according to MongoDB structure
       const jobData = {
         title: formData.title,
         postedBy: user.displayName || user.email,
@@ -53,12 +52,9 @@ const AddJob = () => {
         userEmail: user.email,
       };
 
-      // Add job to database
       await jobAPI.addJob(jobData);
-
       setSuccess(true);
 
-      // Show success message and redirect after 2 seconds
       setTimeout(() => {
         navigate("/myAddedJobs");
       }, 2000);
@@ -66,7 +62,6 @@ const AddJob = () => {
       setError(
         err.response?.data?.message || "Failed to add job. Please try again."
       );
-      console.error("Error adding job:", err);
     } finally {
       setLoading(false);
     }

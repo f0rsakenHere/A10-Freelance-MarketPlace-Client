@@ -28,16 +28,13 @@ const AllJobs = () => {
     setError("");
 
     try {
-      // Map sortBy state to API parameters
       const sortOrder = sortBy === "newest" ? "desc" : "asc";
       const response = await jobAPI.getAllJobs("postedDate", sortOrder);
-      // API returns { success, count, data: [...jobs] }
       const jobsData = response.data?.data || [];
       setJobs(jobsData);
     } catch (err) {
       setError("Failed to load jobs. Please try again.");
-      console.error("Error fetching jobs:", err);
-      setJobs([]); // Set empty array on error
+      setJobs([]);
     } finally {
       setLoading(false);
     }

@@ -24,10 +24,8 @@ const MyAcceptedJobs = () => {
 
     try {
       const response = await jobAPI.getMyAcceptedTasks(user.email);
-      // API returns { success, count, data: [...tasks] }
       const tasksData = response.data?.data || [];
 
-      // Fetch full job details for each accepted task
       const tasksWithDetails = await Promise.all(
         tasksData.map(async (task) => {
           try {
@@ -36,12 +34,9 @@ const MyAcceptedJobs = () => {
             return {
               ...task,
               ...jobData,
-              // Preserve acceptedDate from the task
               acceptedDate: task.acceptedDate || task.createdAt,
             };
-          } catch (err) {
-            console.error(`Failed to fetch job ${task.jobId}:`, err);
-            // Return task with minimal info if job fetch fails
+          } catch {
             return task;
           }
         })
@@ -50,7 +45,6 @@ const MyAcceptedJobs = () => {
       setTasks(tasksWithDetails);
     } catch (err) {
       setError("Failed to load your accepted tasks. Please try again.");
-      console.error("Error fetching tasks:", err);
       setTasks([]);
     } finally {
       setLoading(false);

@@ -18,10 +18,8 @@ const JobDetails = () => {
   const [isAlreadyAccepted, setIsAlreadyAccepted] = useState(false);
 
   useEffect(() => {
-    // Scroll to top when component mounts or job ID changes
     window.scrollTo(0, 0);
     fetchJobDetails();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchJobDetails = async () => {
@@ -30,23 +28,18 @@ const JobDetails = () => {
 
     try {
       const response = await jobAPI.getJobById(id);
-      // API returns { success, data: {...job} }
       const jobData = response.data?.data || null;
       setJob(jobData);
 
-      // Check localStorage for accepted jobs
       const acceptedJobs = JSON.parse(
         localStorage.getItem("acceptedJobs") || "{}"
       );
 
-      // Check if this job is already accepted
       if (acceptedJobs[jobData?._id]) {
         setIsAlreadyAccepted(true);
-        // Don't show success message on page load, only after accepting
       }
     } catch (err) {
       setError("Failed to load job details. Please try again.");
-      console.error("Error fetching job:", err);
     } finally {
       setLoading(false);
     }
@@ -72,14 +65,12 @@ const JobDetails = () => {
     setAccepting(true);
 
     try {
-      // Accept job with required fields: jobId, userEmail, userName
       await jobAPI.acceptJob({
         jobId: job._id,
         userEmail: user.email,
         userName: user.displayName || user.email.split("@")[0],
       });
 
-      // Save to localStorage
       const acceptedJobs = JSON.parse(
         localStorage.getItem("acceptedJobs") || "{}"
       );
@@ -98,7 +89,6 @@ const JobDetails = () => {
         autoClose: 2000,
       });
 
-      // Show success message and redirect after 2 seconds
       setTimeout(() => {
         navigate("/my-accepted-tasks");
       }, 2000);
@@ -111,7 +101,6 @@ const JobDetails = () => {
           autoClose: 4000,
         }
       );
-      console.error("Error accepting job:", err);
     } finally {
       setAccepting(false);
     }

@@ -23,12 +23,10 @@ const MyPostedJobs = () => {
 
     try {
       const response = await jobAPI.getMyJobs(user.email);
-      // API returns { success, count, data: [...jobs] }
       const jobsData = response.data?.data || [];
       setJobs(jobsData);
     } catch (err) {
       setError("Failed to load your jobs. Please try again.");
-      console.error("Error fetching jobs:", err);
       setJobs([]);
     } finally {
       setLoading(false);
@@ -47,7 +45,6 @@ const MyPostedJobs = () => {
       setJobs(jobs.filter((job) => job._id !== jobId));
     } catch (err) {
       alert("Failed to delete job. Please try again.");
-      console.error("Error deleting job:", err);
     } finally {
       setDeleteLoading(null);
     }
