@@ -13,13 +13,21 @@ const LatestOpportunities = () => {
     const fetchJobs = async () => {
       try {
         setLoading(true);
+        const API_BASE_URL =
+          import.meta.env.VITE_API_URL ||
+          "https://a10-freelance-market-place-server-8uk0xdxck.vercel.app";
+        console.log(
+          "Fetching from:",
+          `${API_BASE_URL}/api/jobs/latest?limit=6`
+        );
         const response = await axios.get(
-          "http://localhost:5000/api/jobs/latest?limit=6"
+          `${API_BASE_URL}/api/jobs/latest?limit=6`
         );
         if (response.data.success) {
           setJobs(response.data.data);
         }
-      } catch (err) {
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
         setError("Failed to load jobs. Please try again later.");
       } finally {
         setLoading(false);
