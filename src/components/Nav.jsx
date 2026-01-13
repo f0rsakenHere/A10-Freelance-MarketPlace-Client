@@ -13,11 +13,23 @@ const Nav = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
+      const nav = document.querySelector("nav");
+      const mobileMenuDropdown = document.querySelector(
+        ".mobile-menu-dropdown"
+      );
+
       if (isUserMenuOpen && !event.target.closest(".user-menu-container")) {
         setIsUserMenuOpen(false);
       }
-      if (isMobileOpen && !event.target.closest("nav")) {
-        setIsMobileOpen(false);
+
+      // Only close mobile menu if clicking outside nav AND mobile menu dropdown
+      if (isMobileOpen && nav && mobileMenuDropdown) {
+        if (
+          !nav.contains(event.target) &&
+          !mobileMenuDropdown.contains(event.target)
+        ) {
+          setIsMobileOpen(false);
+        }
       }
     };
 
@@ -286,7 +298,7 @@ const Nav = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMobileOpen && (
-        <div className="md:hidden fixed top-16 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-lg max-h-screen overflow-y-auto z-40">
+        <div className="mobile-menu-dropdown md:hidden fixed top-16 left-0 right-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-lg max-h-screen overflow-y-auto z-40">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             <Link
               to="/"

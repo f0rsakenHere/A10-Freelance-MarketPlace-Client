@@ -248,7 +248,7 @@ const AllJobs = () => {
                   {/* Cover Image */}
                   <Link
                     to={`/job/${job._id}`}
-                    className="md:w-72 h-56 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
+                    className="w-full md:w-72 h-40 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
                   >
                     <img
                       src={job.coverImage}
@@ -267,71 +267,74 @@ const AllJobs = () => {
                     <div className="flex flex-col h-full">
                       {/* Top Section */}
                       <div className="flex-1">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <Link to={`/job/${job._id}`}>
-                              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
+                        <div className="mb-4">
+                          <div className="flex flex-col md:flex-row md:items-start gap-2 mb-3">
+                            <Link
+                              to={`/job/${job._id}`}
+                              className="flex-1 min-w-0"
+                            >
+                              <h3 className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer line-clamp-2">
                                 {job.title}
                               </h3>
                             </Link>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 dark:text-gray-300 mb-3">
-                              <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                                <svg
-                                  className="w-4 h-4 text-blue-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                  />
-                                </svg>
-                                <span className="font-semibold">
-                                  {job.postedBy}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                                <svg
-                                  className="w-4 h-4 text-purple-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                                <span className="font-medium">
-                                  {getTimeAgo(job.postedDate)}
-                                </span>
-                              </div>
+                            <span
+                              className={`px-3 py-1 rounded-full text-xs font-bold border-2 backdrop-blur-sm whitespace-nowrap shrink-0 ${getCategoryColor(
+                                job.category
+                              )}`}
+                            >
+                              {job.category}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 text-xs md:text-sm text-gray-700 dark:text-gray-300 mb-3">
+                            <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/60 backdrop-blur-sm px-2 md:px-3 py-1 md:py-1.5 rounded-full">
+                              <svg
+                                className="w-3 md:w-4 h-3 md:h-4 text-blue-500 shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                              </svg>
+                              <span className="font-semibold truncate">
+                                {job.postedBy}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white/60 dark:bg-gray-700/60 backdrop-blur-sm px-2 md:px-3 py-1 md:py-1.5 rounded-full">
+                              <svg
+                                className="w-3 md:w-4 h-3 md:h-4 text-purple-500 shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              <span className="font-medium">
+                                {getTimeAgo(job.postedDate)}
+                              </span>
                             </div>
                           </div>
-                          <span
-                            className={`px-4 py-2 rounded-full text-xs font-bold border-2 backdrop-blur-sm whitespace-nowrap ml-4 ${getCategoryColor(
-                              job.category
-                            )}`}
-                          >
-                            {job.category}
-                          </span>
                         </div>
 
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-2 mb-4">
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-2 mb-4 text-sm md:text-base">
                           {job.summary}
                         </p>
                       </div>
 
                       {/* Bottom Section */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
-                        <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-white/40 dark:bg-gray-700/40 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+                        <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 bg-white/40 dark:bg-gray-700/40 backdrop-blur-sm px-2 md:px-3 py-1.5 md:py-1.5 rounded-full overflow-hidden">
                           <svg
-                            className="w-4 h-4 text-pink-500"
+                            className="w-3 md:w-4 h-3 md:h-4 text-pink-500 shrink-0"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -343,14 +346,14 @@ const AllJobs = () => {
                               d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                             />
                           </svg>
-                          <span className="text-xs font-medium">
+                          <span className="font-medium truncate">
                             {job.userEmail}
                           </span>
                         </div>
 
                         <Link
                           to={`/job/${job._id}`}
-                          className="px-8 py-3 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300"
+                          className="w-full md:w-auto px-6 py-2 md:py-3 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white text-center md:text-left rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm md:text-base"
                         >
                           View Details →
                         </Link>

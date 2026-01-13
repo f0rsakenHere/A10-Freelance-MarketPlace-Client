@@ -214,12 +214,12 @@ const JobDetails = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8 rounded-2xl overflow-hidden shadow-lg"
+          className="mb-6 md:mb-8 rounded-2xl overflow-hidden shadow-lg"
         >
           <img
             src={job.coverImage}
             alt={job.title}
-            className="w-full h-96 object-cover"
+            className="w-full h-48 md:h-96 object-cover"
             onError={(e) => {
               e.target.src =
                 "https://via.placeholder.com/1200x400?text=Job+Cover+Image";
@@ -232,28 +232,28 @@ const JobDetails = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg p-8 border border-white/50"
+          className="bg-white/60 backdrop-blur-xl rounded-2xl shadow-lg p-4 md:p-8 border border-white/50"
         >
           {/* Header */}
           <div className="mb-6">
-            <div className="flex items-start justify-between mb-4">
-              <h1 className="text-4xl font-bold text-gray-900 flex-1">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-4">
+              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 flex-1 line-clamp-3">
                 {job.title}
               </h1>
               <span
-                className={`px-4 py-2 rounded-full text-sm font-bold border-2 ${getCategoryColor(
+                className={`px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-bold border-2 whitespace-nowrap shrink-0 ${getCategoryColor(
                   job.category
-                )} ml-4`}
+                )}`}
               >
                 {job.category}
               </span>
             </div>
 
             {/* Meta Information */}
-            <div className="flex flex-wrap items-center gap-6 text-gray-700">
+            <div className="flex flex-col gap-3 text-xs md:text-sm text-gray-700">
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-blue-500"
+                  className="w-4 md:w-5 h-4 md:h-5 text-blue-500 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -265,11 +265,13 @@ const JobDetails = () => {
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   />
                 </svg>
-                <span className="font-semibold">Posted by: {job.postedBy}</span>
+                <span className="font-semibold truncate">
+                  Posted by: {job.postedBy}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-purple-500"
+                  className="w-4 md:w-5 h-4 md:h-5 text-purple-500 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -285,7 +287,7 @@ const JobDetails = () => {
               </div>
               <div className="flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-pink-500"
+                  className="w-4 md:w-5 h-4 md:h-5 text-pink-500 shrink-0"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -297,7 +299,7 @@ const JobDetails = () => {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <span className="text-sm">{job.userEmail}</span>
+                <span className="truncate">{job.userEmail}</span>
               </div>
             </div>
           </div>
@@ -307,22 +309,22 @@ const JobDetails = () => {
 
           {/* Job Description */}
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
               Job Description
             </h2>
-            <p className="text-gray-700 leading-relaxed text-lg whitespace-pre-line">
+            <p className="text-gray-700 leading-relaxed text-sm md:text-base whitespace-pre-line">
               {job.summary}
             </p>
           </div>
 
           {/* Accept Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-center md:justify-end">
             {isAlreadyAccepted && !acceptSuccess ? (
-              <div className="text-center">
-                <div className="px-10 py-4 bg-gray-400 text-white rounded-xl font-bold text-lg cursor-not-allowed opacity-70">
+              <div className="text-center w-full md:w-auto">
+                <div className="px-6 md:px-10 py-3 md:py-4 bg-gray-400 text-white rounded-xl font-bold text-sm md:text-lg cursor-not-allowed opacity-70 w-full md:w-auto">
                   Already Accepted
                 </div>
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-xs md:text-sm text-gray-600 mt-2">
                   {(() => {
                     const acceptedJobs = JSON.parse(
                       localStorage.getItem("acceptedJobs") || "{}"
@@ -340,7 +342,7 @@ const JobDetails = () => {
               <button
                 onClick={handleAcceptJob}
                 disabled={accepting || acceptSuccess || isAlreadyAccepted}
-                className="px-10 py-4 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full md:w-auto px-6 md:px-10 py-3 md:py-4 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold text-sm md:text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {accepting
                   ? "Accepting..."
@@ -357,14 +359,14 @@ const JobDetails = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-6 bg-white/40 backdrop-blur-lg rounded-2xl shadow-md p-6 border border-white/50"
+          className="mt-6 bg-white/40 backdrop-blur-lg rounded-2xl shadow-md p-4 md:p-6 border border-white/50"
         >
           <h3 className="text-lg font-bold text-gray-900 mb-4">
             Contact Information
           </h3>
-          <div className="flex items-center gap-3 text-gray-700">
+          <div className="flex items-center gap-3 text-gray-700 text-xs md:text-sm">
             <svg
-              className="w-5 h-5 text-blue-500"
+              className="w-4 md:w-5 h-4 md:h-5 text-blue-500 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -378,7 +380,7 @@ const JobDetails = () => {
             </svg>
             <a
               href={`mailto:${job.userEmail}`}
-              className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
+              className="text-blue-600 hover:text-blue-700 font-medium hover:underline truncate"
             >
               {job.userEmail}
             </a>
