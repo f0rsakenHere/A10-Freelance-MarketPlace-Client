@@ -19,13 +19,13 @@ export const ThemeProvider = ({ children }) => {
       return savedTheme;
     }
 
-    // TEMPORARILY force light mode to test - comment out system preference check
-    // if (
-    //   window.matchMedia &&
-    //   window.matchMedia("(prefers-color-scheme: dark)").matches
-    // ) {
-    //   return "dark";
-    // }
+    // Check system preference
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "dark";
+    }
 
     return "light";
   });
