@@ -10,7 +10,6 @@ const Nav = () => {
   const { user, logoutUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       const nav = document.querySelector("nav");
@@ -22,7 +21,6 @@ const Nav = () => {
         setIsUserMenuOpen(false);
       }
 
-      // Only close mobile menu if clicking outside nav AND mobile menu dropdown
       if (isMobileOpen && nav && mobileMenuDropdown) {
         if (
           !nav.contains(event.target) &&
@@ -47,7 +45,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 transition-colors">
+      <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 transition-colors">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo/Brand */}

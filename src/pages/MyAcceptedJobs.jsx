@@ -166,12 +166,12 @@ const MyAcceptedJobs = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8 bg-white/40 backdrop-blur-lg rounded-2xl p-8 border border-white/50 shadow-md"
+          className="mb-8 bg-white/40 backdrop-blur-lg rounded-2xl p-4 md:p-8 border border-white/50 shadow-md"
         >
-          <h1 className="text-5xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
+          <h1 className="text-3xl md:text-5xl font-bold bg-linear-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-3">
             My Accepted Tasks
           </h1>
-          <p className="text-gray-700 text-lg">
+          <p className="text-gray-700 text-sm md:text-lg">
             View and manage tasks you have accepted to work on
           </p>
         </motion.div>
@@ -243,7 +243,7 @@ const MyAcceptedJobs = () => {
                   {/* Cover Image */}
                   <Link
                     to={`/job/${task.jobId}`}
-                    className="md:w-72 h-56 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
+                    className="w-full md:w-72 h-40 md:h-auto overflow-hidden shrink-0 relative block cursor-pointer"
                   >
                     <img
                       src={task.coverImage}
@@ -258,102 +258,102 @@ const MyAcceptedJobs = () => {
                   </Link>
 
                   {/* Content */}
-                  <div className="flex-1 p-6">
+                  <div className="flex-1 p-4 md:p-6">
                     <div className="flex flex-col h-full">
                       {/* Top Section */}
                       <div className="flex-1">
-                        <div className="flex items-start justify-between mb-4">
-                          <div className="flex-1">
-                            <Link to={`/job/${task.jobId}`}>
-                              <h3 className="text-2xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
+                        <div className="mb-4">
+                          <div className="flex flex-col md:flex-row md:items-start gap-3 mb-3">
+                            <Link
+                              to={`/job/${task.jobId}`}
+                              className="flex-1 min-w-0"
+                            >
+                              <h3 className="text-lg md:text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors cursor-pointer line-clamp-2">
                                 {task.title}
                               </h3>
                             </Link>
-                            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700 mb-3">
-                              <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                                <svg
-                                  className="w-4 h-4 text-blue-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                                  />
-                                </svg>
-                                <span className="font-semibold">
-                                  {task.postedBy}
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                                <svg
-                                  className="w-4 h-4 text-green-500"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                                <span className="font-medium text-green-600">
-                                  Accepted {getTimeAgo(task.acceptedDate)}
-                                </span>
-                              </div>
+                            <span
+                              className={`px-3 md:px-4 py-1 md:py-2 rounded-full text-xs font-bold backdrop-blur-sm whitespace-nowrap shrink-0 ${getCategoryColor(
+                                task.category
+                              )}`}
+                            >
+                              {task.category}
+                            </span>
+                          </div>
+                          <div className="flex flex-col gap-2 text-xs md:text-sm text-gray-700 mb-3">
+                            <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-2 md:px-3 py-1 md:py-1.5 rounded-full w-fit">
+                              <svg
+                                className="w-3 md:w-4 h-3 md:h-4 text-blue-500 shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                              </svg>
+                              <span className="font-semibold truncate">
+                                {task.postedBy}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-2 md:px-3 py-1 md:py-1.5 rounded-full w-fit">
+                              <svg
+                                className="w-3 md:w-4 h-3 md:h-4 text-green-500 shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                              </svg>
+                              <span className="font-medium text-green-600">
+                                Accepted {getTimeAgo(task.acceptedDate)}
+                              </span>
                             </div>
                           </div>
-                          <span
-                            className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-sm whitespace-nowrap ml-4 ${getCategoryColor(
-                              task.category
-                            )}`}
-                          >
-                            {task.category}
-                          </span>
                         </div>
 
-                        <p className="text-gray-700 leading-relaxed line-clamp-2 mb-4">
+                        <p className="text-gray-700 leading-relaxed line-clamp-2 mb-4 text-sm md:text-base">
                           {task.summary}
                         </p>
                       </div>
 
                       {/* Bottom Section */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-200/50">
-                        <div className="flex items-center gap-3">
-                          <button
-                            onClick={() =>
-                              handleRemoveTask(task.acceptedTaskId, "done")
-                            }
-                            disabled={removingTaskId === task.acceptedTaskId}
-                            className="flex items-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                            title="Mark as Done"
-                          >
-                            <span className="text-lg">✅</span>
-                            <span>Done</span>
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleRemoveTask(task.acceptedTaskId, "cancel")
-                            }
-                            disabled={removingTaskId === task.acceptedTaskId}
-                            className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                            title="Cancel Task"
-                          >
-                            <span className="text-lg">❌</span>
-                            <span>Cancel</span>
-                          </button>
-                        </div>
-
+                      <div className="grid grid-cols-3 gap-2 pt-4 border-t border-gray-200/50">
+                        <button
+                          onClick={() =>
+                            handleRemoveTask(task.acceptedTaskId, "done")
+                          }
+                          disabled={removingTaskId === task.acceptedTaskId}
+                          className="flex items-center justify-center gap-1 px-2 py-2.5 bg-green-50 hover:bg-green-100 text-green-700 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs"
+                          title="Mark as Done"
+                        >
+                          <span>✅</span>
+                          <span>Done</span>
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleRemoveTask(task.acceptedTaskId, "cancel")
+                          }
+                          disabled={removingTaskId === task.acceptedTaskId}
+                          className="flex items-center justify-center gap-1 px-2 py-2.5 bg-red-50 hover:bg-red-100 text-red-700 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs"
+                          title="Cancel Task"
+                        >
+                          <span>❌</span>
+                          <span>Cancel</span>
+                        </button>
                         <Link
                           to={`/job/${task.jobId}`}
-                          className="px-6 py-2 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all duration-300"
+                          className="flex items-center justify-center px-2 py-2.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white rounded-lg font-bold text-xs"
                         >
-                          View Details →
+                          View →
                         </Link>
                       </div>
                     </div>
