@@ -78,12 +78,28 @@ export const AuthProvider = ({ children }) => {
   // Observer for auth state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser) {
+        // Fetch user role
+        // TODO: Replace with backend API call to get user role from database
+        const role = getUserRole(currentUser.email);
+        setUser({ ...currentUser, role });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
+
+  // Mock role assignment based on email
+  // TODO: Replace with actual API call to backend
+  const getUserRole = (email) => {
+    if (email === "demoadmin@example.com") return "admin";
+    if (email === "demouser@example.com") return "user";
+    // Default role for all other users
+    return "user";
+  };
 
   const authInfo = {
     user,

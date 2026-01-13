@@ -86,6 +86,30 @@ const Nav = () => {
                 All Jobs
               </Link>
 
+              <Link
+                to="/about"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+              >
+                About
+              </Link>
+
+              <Link
+                to="/contact"
+                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+              >
+                Contact
+              </Link>
+
+              {/* Dashboard Link - Only visible when logged in */}
+              {user && (
+                <Link
+                  to={user.role === "admin" ? "/dashboard/admin" : "/dashboard"}
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                >
+                  Dashboard
+                </Link>
+              )}
+
               {/* My Jobs Dropdown */}
               <div className="relative group">
                 <button
@@ -312,6 +336,33 @@ const Nav = () => {
             >
               All Jobs
             </Link>
+
+            <Link
+              to="/about"
+              className="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg font-medium transition-colors"
+              onClick={() => setIsMobileOpen(false)}
+            >
+              About
+            </Link>
+
+            <Link
+              to="/contact"
+              className="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg font-medium transition-colors"
+              onClick={() => setIsMobileOpen(false)}
+            >
+              Contact
+            </Link>
+
+            {/* Dashboard Link - Only visible when logged in */}
+            {user && (
+              <Link
+                to={user.role === "admin" ? "/dashboard/admin" : "/dashboard"}
+                className="block px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg font-medium transition-colors"
+                onClick={() => setIsMobileOpen(false)}
+              >
+                Dashboard
+              </Link>
+            )}
 
             {/* My Jobs Accordion */}
             <div>
